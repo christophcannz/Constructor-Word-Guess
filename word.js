@@ -1,10 +1,10 @@
 var letter = require("./letter.js");
 
-function word(answer) {
+function Word(answer) {
     this.objectArray = [];
 
     for(var i = 0; i < answer.length; i++) {
-        var letter = new letter(answer[i]);
+        var letter = new Letter(answer[i]);
         this.objectArray.push(letter);
     }
 
@@ -13,7 +13,7 @@ function word(answer) {
         for(var i = 0; i < this.objectArray.length; i++) {
             answerLog += this.objectArray[i] + " ";
         }
-        console.log(answerLog + "\n============\n");
+        console.log(answerLog + "\n========================\n");
     };
 
     this.userGuess = function(input) {

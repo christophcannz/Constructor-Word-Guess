@@ -3,44 +3,44 @@ var inquirer = require("inquirer");
 
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
 
-var BallClubs = [
+var BaseballTerms = [
 
-    "Arizona Diamondbacks",
-    "Atlanta Braves",
-    "Baltimore Orioles", 
-    "Boston Red Sox",
-    "Chicago White Sox",
-    "Chicago Cubs",
-    "Cincinnati Reds",
-    "Cleveland Indians",
-    "Colorado Rockies",
-    "Detroit Tigers",
-    "Houston Astros",
-    "Kansas City Royals",
-    "Los Angeles Angels",
-    "Los Angeles Dodgers",
-    "Miami Marlins",
-    "Milwaukee Brewers",
-    "Minnesota Twins",
-    "New York Yankees",
-    "New York Mets",
-    "Oakland Athletics",
-    "Philadelphia Phillies",
-    "Pittsburgh Pirates",
-    "San Diego Padres",
-    "San Francisco Giants",
-    "Seattle Mariners",
-    "St. Louis Cardinals",
-    "Tampa Bay Rays",
-    "Texas Rangers",
-    "Toronto Blue Jays",
-    "Washington Nationals"
+    "pitch",
+    "out",
+    "tag", 
+    "slider",
+    "base",
+    "changeup",
+    "umpire",
+    "plate",
+    "dugout",
+    "bullpen",
+    "warmup",
+    "toss",
+    "routine",
+    "ball",
+    "steal",
+    "homerun",
+    "triple",
+    "double",
+    "single",
+    "inning",
+    "delay",
+    "bat",
+    "swing",
+    "foul",
+    "catch",
+    "field",
+    "diamond",
+    "run",
+    "foul",
+    "strike"
 
 ];
 
-var randomIndex = Math.floor(Math.random() * BallClubs.length);
+var randomIndex = Math.floor(Math.random() * BaseballTerms.length);
 
-var randomWord = BallClubs[randomIndex];
+var randomWord = BaseballTerms[randomIndex];
 
 var computerWord = new Word(randomWord);
 
@@ -52,8 +52,8 @@ var guessesLeft = 10;
 
 function theLogic() {
     if(requireNewWord) {
-        var randomIndex = Math.floor(Math.random() * BallClubs.length);
-        var randomWord = BallClubs[randomIndex];
+        var randomIndex = Math.floor(Math.random() * BaseballTerms.length);
+        var randomWord = BaseballTerms[randomIndex];
 
         computerWord = new Word(randomWord);
 
@@ -70,9 +70,77 @@ function theLogic() {
                 name: "userInput"
             }
         ]).then(function(input) {
+            if(letterArray.includes(inut.userInput) || input.userInput.length > 1) {
+                console.log("\nPlease try again!\n");
+                theLogic();
+            }else {
+                if(
+                    incorrectLetters.includes(input.userInput) || correctLetters.includes(input.userinput) || input.userinput ===""
+                ) {
+                    console.log("\nAlready Guessed or Nothing was Entered\n");
+                    theLogic();
+                } else {
+                    var wordCheckArray = [];
 
-        })
-    }else {
+                    computerWord.userGuess(input.userinput);
+
+                    computerWord.objectArray.forEach(wordCheck);
+                    if(wordCheckArray.join("") === wordComplete.join("")) {
+                        console.log("\nIncorrect|n");
+
+                        incorrectLetters.push(input.userinput);
+                        guessesLeft --;
+                    } else {
+                        console.log("\nCorrect|n");
+
+                        correctLetters.push(input.userinput);
+                    }
+                    computerWord();
+
+                    console.log("Guesses Left: " + guessesLeft + "\n");
+
+                    console.log("Letters Guessed: " + incorrectLetters.join(" ") + "\n");
+
+                    if(guessesLeft > 0) {
+                        theLogic();
+                    } else {
+                        console.log("You've Lost!\n")
+                    }
+                    function wordCheck(key) {
+                        wordCheckArray.push(key.guessed);
+                    }
+                }
+            }
+
+        });
+    } else {
         console.log("You WIN!\n");
     }
+    function completeCheck (key) {
+        wordComplete
+    }
 }
+
+function restartGame () {
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "Would you like to",
+            choices: ["Play Again", "Leave"],
+            name: "restart"
+        }
+    ]).then(function(input){
+        if (input.restart === "Play Again") {
+            requireNewWord = true;
+            incorrectLetters = [];
+            correctLetters = [];
+            guessesLeft = 10;
+            theLogic();
+
+
+        } else {
+            return;
+        }
+    });
+}
+theLogic();
