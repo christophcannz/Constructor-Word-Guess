@@ -3,7 +3,7 @@ var inquirer = require("inquirer");
 
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
 
-var BaseballTerms = [
+var BaseballTerms = [ //array holding words to be guessed.
 
     "pitch",
     "out",
@@ -38,20 +38,20 @@ var BaseballTerms = [
 
 ];
 
-var randomIndex = Math.floor(Math.random() * BaseballTerms.length);
+var randomIndex = Math.floor(Math.random() * BaseballTerms.length); //random loop
 
-var randomWord = BaseballTerms[randomIndex];
+var randomWord = BaseballTerms[randomIndex]; //random word variable
 
-var computerWord = new Word(randomWord);
+var computerWord = new Word(randomWord); //generate a random word.
 
-var requireNewWord = false;
+var requireNewWord = false; //set a new word.
 var incorrectLetters = [];
 var correctLetters = [];
 
 var guessesLeft = 10;
 
 function theLogic() {
-    if(requireNewWord) {
+    if(requireNewWord) { //generate a new word.
         var randomIndex = Math.floor(Math.random() * BaseballTerms.length);
         var randomWord = BaseballTerms[randomIndex];
 
@@ -60,9 +60,9 @@ function theLogic() {
         requireNewWord = false;
     }
 
-    var wordComplete = [];
+    var wordComplete = []; //completed word
 
-    if (wordComplete.includes(false)) {
+    if (wordComplete.includes(false)) { 
         inquirer.prompt([
             {
                 type: "input",
@@ -125,12 +125,12 @@ function restartGame () {
     inquirer.prompt([
         {
             type: "list",
-            message: "Would you like to",
-            choices: ["Play Again", "Leave"],
+            message: "Would you like to", //completed game message.
+            choices: ["Play Again", "Leave"], //completed game message options.
             name: "restart"
         }
     ]).then(function(input){
-        if (input.restart === "Play Again") {
+        if (input.restart === "Play Again") { //restart game message.
             requireNewWord = true;
             incorrectLetters = [];
             correctLetters = [];

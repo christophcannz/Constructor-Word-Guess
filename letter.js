@@ -2,13 +2,13 @@ function letter(value) {
     this.letter = value;
     this.guessed = false;
 
-    this.toString = function () {
+    this.toString = function () {//determine spaces and blanks in terminal.
         if (this.letter === " ") {
-            this.guessed = true;
+            this.guessed = true;//determine the guessed, true or false
             return " ";
         } else {
             if (this.guessed === false) {
-                return "_";
+                return "_"; //determine the blanks/underline
             } else {
                 return this.letter;
             }
@@ -22,4 +22,4 @@ function letter(value) {
     };
 }
 
-module.exports = letter;
+module.exports = letter;//export for use in word.js
